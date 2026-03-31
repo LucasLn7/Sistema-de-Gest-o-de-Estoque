@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css.css">
+    <title>Sistema de Gestão</title>
+</head>
+<body>
+
+<aside>
+    <div class="logo">
+        <span>Gordo</span>
+        <small>Gestão de estoque</small>
+    </div>
+
+    <nav>
+        <div class="nav-label">Menu</div>
+        <div class="nav-item active" onclick="showTab('estoque', this)">
+            <span class="icon">📦</span>Estoque
+        </div>
+
+        <div class="nav-item" onclick="showTab('pedidos', this)">
+            <span class="icon">🛒</span> Pedidos
+            <span class="badge" id="badge-pedidos">3</span>
+        </div>
+        
+        <div class="nav-item" onclick="showTab('vendas', this)">
+            <span class="icon">📊</span> Vendas
+        </div>
+        
+        <div class="nav-label" style="margin-top:24px">Categorias</div>
+   
+        <div class="nav-item" onclick="filterClasse('Eletrônicos')">
+            <span class="icon">⚡</span> Eletrônicos
+        </div>
+
+
+        <div class="nav-item" onclick="filterClasse('Alimentos')">
+            <span class="icon">🍎</span> Alimentos
+        </div>
+
+
+        <div class="nav-item" onclick="filterClasse('Informática')">
+            <span class="icon">💻</span> Informática
+        </div>
+
+        <div class="nav-item" onclick="filterClasse('Limpeza')">
+            <span class="icon">🧹</span> Limpeza
+        </div>
+
+
+        <div class="nav-item" onclick="filterClasse(null)">
+            <span class="icon">🔄</span> Todas
+        </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <strong>Admin</strong>
+    v1.0 · Teste
+  </div>
+</aside>
+
+
+<main>
+    <header>
+        <div class="page-title" id="page-title"> Estoque</div>
+        <div class="header-actions">
+            <buttom class="btn btn-ghost"onclick="openModal()">＋ Novo Item</button>
+            <button class="btn btn-accent" onclick="iniciarPedido()">🛒 Iniciar Pedido</button>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <div class="tab-page active" id="tab-estoque">
+            <div class="estoque-layout">
+                <div class="table-area"></div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>
