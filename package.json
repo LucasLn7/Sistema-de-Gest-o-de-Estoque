@@ -1,0 +1,23 @@
+{
+  "name": "projeto_pi",
+  "version": "1.0.0",
+  "description": "Sistema web de gestão de estoque desenvolvido com HTML, CSS e JavaScript puro.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasLn7/Sistema-de-Gest-o-de-Estoque.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LucasLn7/Sistema-de-Gest-o-de-Estoque/issues"
+  },
+  "homepage": "https://github.com/LucasLn7/Sistema-de-Gest-o-de-Estoque#readme"
+}
