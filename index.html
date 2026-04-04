@@ -1,87 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css.css">
-    <title>Sistema de Gestão</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockOS — Sistema de Gestão</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css.css">
 </head>
 <body>
 
+
 <aside>
-    <div class="logo">
-        <span>Gordo</span>
-        <small>Gestão de estoque</small>
+  <div class="logo">
+    <span>StockOS</span>
+    <small>Gestão de Estoque</small>
+  </div>
+
+  <nav>
+    <div class="nav-label">Menu</div>
+    <div class="nav-item active" onclick="showTab('estoque', this)">
+      <span class="icon">📦</span> Estoque
     </div>
 
-    <nav>
-        <div class="nav-label">Menu</div>
-        <div class="nav-item active" onclick="showTab('estoque', this)">
-            <span class="icon">📦</span>Estoque
-        </div>
+    <div class="nav-item" onclick="showTab('pedidos', this)">
+      <span class="icon">🛒</span> Pedidos
+      <span class="badge" id="badge-pedidos">3</span>
+    </div>
+    
+    <div class="nav-item" onclick="showTab('vendas', this)">
+      <span class="icon">📊</span> Vendas
+    </div>
 
-        <div class="nav-item" onclick="showTab('pedidos', this)">
-            <span class="icon">🛒</span> Pedidos
-            <span class="badge" id="badge-pedidos">3</span>
-        </div>
-        
-        <div class="nav-item" onclick="showTab('vendas', this)">
-            <span class="icon">📊</span> Vendas
-        </div>
-        
-        <div class="nav-label" style="margin-top:24px">Categorias</div>
-   
-        <div class="nav-item" onclick="filterClasse('Eletrônicos')">
-            <span class="icon">⚡</span> Eletrônicos
-        </div>
-
-
-        <div class="nav-item" onclick="filterClasse('Alimentos')">
-            <span class="icon">🍎</span> Alimentos
-        </div>
-
-
-        <div class="nav-item" onclick="filterClasse('Informática')">
-            <span class="icon">💻</span> Informática
-        </div>
-
-        <div class="nav-item" onclick="filterClasse('Limpeza')">
-            <span class="icon">🧹</span> Limpeza
-        </div>
-
-
-        <div class="nav-item" onclick="filterClasse(null)">
-            <span class="icon">🔄</span> Todas
-        </div>
+    <div class="nav-label" style="margin-top:24px">Categorias</div>
+    <div class="nav-item" onclick="filterClasse('Eletrônicos')">
+      <span class="icon">⚡</span> Eletrônicos
+    </div>
+    <div class="nav-item" onclick="filterClasse('Alimentos')">
+      <span class="icon">🍎</span> Alimentos
+    </div>
+    <div class="nav-item" onclick="filterClasse('Informática')">
+      <span class="icon">💻</span> Informática
+    </div>
+    <div class="nav-item" onclick="filterClasse('Limpeza')">
+      <span class="icon">🧹</span> Limpeza
+    </div>
+    <div class="nav-item" onclick="filterClasse(null)">
+      <span class="icon">🔄</span> Todas
+    </div>
   </nav>
 
   <div class="sidebar-footer">
     <strong>Admin</strong>
-    v1.0 · Teste
+    v1.0 · Base
   </div>
 </aside>
 
-
 <main>
-    <header>
-        <div class="page-title" id="page-title"> Estoque</div>
-        <div class="header-actions">
-            <buttom class="btn btn-ghost"onclick="openModal()">＋ Novo Item</button>
-            <button class="btn btn-accent" onclick="iniciarPedido()">🛒 Iniciar Pedido</button>
-        </div>
-    </header>
+  <header>
+    <div class="page-title" id="page-title">ESTOQUE</div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" onclick="openModal()">＋ Novo Item</button>
+      <button class="btn btn-accent" onclick="iniciarPedido()">🛒 Iniciar Pedido</button>
+    </div>
+  </header>
 
-    <div class="content">
+  <div class="content">
 
-        <div class="tab-page active" id="tab-estoque">
-            <div class="estoque-layout">
-                <div class="table-area"></div>
+    <!-- ESTOQUE  -->
+    <div class="tab-page active" id="tab-estoque">
+      <div class="estoque-layout">
+
+        <div class="table-area">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Total de Itens</div>
+              <div class="stat-val purple" id="total-itens">—</div>
             </div>
+            <div class="stat-card">
+              <div class="stat-label">Em Estoque</div>
+              <div class="stat-val green" id="total-em-estoque">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Estoque Baixo</div>
+              <div class="stat-val yellow" id="total-baixo">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Sem Estoque</div>
+              <div class="stat-val red" id="total-zerado">—</div>
+            </div>
+          </div>
+
+          <!-- Barra de busca-->
+          <div class="toolbar">
+            <input
+              class="search-box"
+              id="search"
+              type="text"
+              placeholder="🔍  Buscar por nome, código, fornecedor..."
+              oninput="renderTable()"
+            >
+            <button class="btn btn-ghost" onclick="toggleSort()">↕ Ordenar</button>
+          </div>
+
+          <!-- Tabela de produtos -->
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Classe</th>
+                <th>Fornecedor</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
         </div>
+
+        <!-- Painel de filtros -->
+        <div class="filter-sidebar">
+          <h3>Filtros</h3>
+
+          <div class="filter-group">
+            <label>Fornecedor</label>
+            <div id="filter-fornecedores"></div>
+          </div>
+
+          <div class="filter-group">
+            <label>Classe</label>
+            <div id="filter-classes"></div>
+          </div>
+
+          <div class="filter-group">
+            <label>Quantidade mín.</label>
+            <input
+              type="range"
+              class="range-slider"
+              id="qty-filter"
+              min="0" max="200" value="0"
+              oninput="updateQtyLabel(); renderTable()"
+            >
+            <div class="range-labels">
+              <span>0</span>
+              <span id="qty-label">0</span>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Distribuição por Classe</label>
+            <div class="mini-chart" id="mini-chart"></div>
+          </div>
+
+          <button class="iniciar-btn" onclick="iniciarPedido()">🛒 Iniciar Pedido</button>
+        </div>
+
+      </div>
     </div>
 
-</main>
+    <!-- PEDIDOS  -->
+    <div class="tab-page" id="tab-pedidos">
+      <div class="pedidos-layout">
+        <div class="section-header">
+          <h2>PEDIDOS RECENTES</h2>
+          <button class="btn btn-accent" onclick="iniciarPedido()">＋ Novo Pedido</button>
+        </div>
+        <div id="pedidos-list"></div>
+      </div>
+    </div>
 
+    <!-- VENDAS  -->
+    <div class="tab-page" id="tab-vendas">
+      <div class="vendas-layout">
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-label">Receita do Mês</div><div class="stat-val green">R$ 48.2k</div></div>
+          <div class="stat-card"><div class="stat-label">Pedidos</div><div class="stat-val purple">134</div></div>
+          <div class="stat-card"><div class="stat-label">Ticket Médio</div><div class="stat-val yellow">R$ 359</div></div>
+          <div class="stat-card"><div class="stat-label">Cancelamentos</div><div class="stat-val red">7</div></div>
+        </div>
+
+        <div class="chart-placeholder">
+          <h3>Vendas — Últimos 6 Meses</h3>
+          <div class="bar-chart" id="bar-chart"></div>
+        </div>
+
+        <div class="chart-placeholder">
+          <h3>Top Produtos Vendidos</h3>
+          <div id="top-produtos"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+<!-- editar itens -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>＋ NOVO ITEM</h2>
+
+    <div class="form-row">
+      <label>Código</label>
+      <input type="text" id="m-cod" placeholder="EX-001">
+    </div>
+    <div class="form-row">
+      <label>Nome do produto</label>
+      <input type="text" id="m-nome" placeholder="Nome do produto">
+    </div>
+    <div class="form-row">
+      <label>Quantidade</label>
+      <input type="number" id="m-qty" placeholder="0" min="0">
+    </div>
+    <div class="form-row">
+      <label>Classe</label>
+      <select id="m-classe">
+        <option>Eletrônicos</option>
+        <option>Alimentos</option>
+        <option>Informática</option>
+        <option>Limpeza</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Fornecedor</label>
+      <input type="text" id="m-fornecedor" placeholder="Nome do fornecedor">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost"  onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-accent" onclick="addItem()">Salvar Item</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="js/main.js"></script>
 </body>
 </html>
