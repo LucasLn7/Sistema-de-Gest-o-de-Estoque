@@ -1,0 +1,37 @@
+.vendas-layout {
+  flex: 1;
+  padding: 24px 32px;
+  overflow: auto;
+}
+.chart-placeholder {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.chart-placeholder h3 {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text2);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 140px;
+}
+.bar-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.bar-body {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: var(--accent2);
+  min-height: 4px;
+  transition: height 0.3s;
+  opacity: 0.8;
+}
+.bar-body.accent { background: var(--accent); opacity: 1; }
+.bar-lbl { font-size: 10px; color: var(--text2); }

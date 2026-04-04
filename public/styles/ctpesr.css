@@ -1,0 +1,74 @@
+/* Conteudos: Content area, tab pages, estoque, stats row e toolbar */
+.content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ---- TAB PAGES ---- */
+.tab-page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+.tab-page.active { display: flex; }
+
+/* ---- ESTOQUE ---- */
+.estoque-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.table-area {
+  flex: 1;
+  overflow: auto;
+  padding: 24px 32px;
+}
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.stat-card .stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+.stat-card .stat-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+}
+.stat-card .stat-val.green { color: var(--success); }
+.stat-card .stat-val.yellow { color: var(--warning); }
+.stat-card .stat-val.red { color: var(--danger); }
+.stat-card .stat-val.purple { color: var(--accent2); }
+.toolbar {
+/* toolbar */
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 14px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-box:focus { border-color: var(--accent2); }
+.search-box::placeholder { color: var(--text2); }
