@@ -13,7 +13,7 @@ export async function loadData() {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY));
     if (saved) return validateSnapshot(normalizeSuppliers(saved));
-  } catch { /* Unavailable or obsolete browser storage must never prevent the preview. */ }
+  } catch { /* Armazenamento indisponível ou incompatível não impede o carregamento da demonstração. */ }
   return normalizeSuppliers(createDemo());
 }
 export function saveData(data) {

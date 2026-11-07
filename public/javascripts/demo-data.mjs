@@ -564,7 +564,7 @@ export function createDemo() {
      const quantity = Math.max(0,base+([5,6].includes(weekday)?Math.ceil(Math.max(1,p.minimum/4)*.5):0)+((p.id*31+(-day)*17)%3)-1);
      history.push({productId:p.id,date,quantity,price:p.price});
    }
-   // Visual placeholder only: a trailing mean, NOT the Python model's output.
+   // A projeção demonstrativa usa média histórica; não representa a saída do modelo Python.
    const recent = history.filter(h=>h.productId===p.id).slice(-28);
    const average = recent.reduce((n,h)=>n+h.quantity,0)/recent.length;
    for(let day=0;day<7;day++) predictions.push({productId:p.id,date:dateAt(day),quantity:Math.round(average*100)/100});

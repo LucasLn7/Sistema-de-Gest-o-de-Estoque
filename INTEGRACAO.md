@@ -1,10 +1,10 @@
 # Integração do front-end StockOS
 
-Esta entrega atualiza somente a interface. Não executa SQL, não treina Python e não grava no MySQL. O servidor Node incluído serve os arquivos estáticos e não executa PHP.
+O front-end de apresentação utiliza dados demonstrativos. O servidor Node serve arquivos estáticos; não executa PHP, consultas SQL ou treinamento Python.
 
 ## Fonte dos dados
 
-`public/config.js` inicia com `mode: 'demo'`. O catálogo tem os 50 produtos do SQL fornecido, com saldo inicial igual a lotes menos vendas daquele arquivo. O histórico sintético tem 180 dias por produto, gerado em JavaScript com a regra da simulação SQL. As 350 projeções ilustrativas são médias dos últimos 28 dias, não saídas do modelo Python. Métricas de avaliação ficam ausentes.
+`public/config.js` inicia com `mode: 'demo'`. O catálogo contém 50 produtos da base de referência, com saldo inicial igual a lotes menos vendas daquele arquivo. O histórico sintético tem 180 dias por produto, gerado em JavaScript com a regra da simulação SQL. As 350 projeções ilustrativas são médias dos últimos 28 dias, não saídas do modelo Python. Métricas de avaliação ficam ausentes.
 
 No modo de demonstração, edições e pedidos ficam no localStorage deste navegador. Os dados locais são preservados ao mudar o dia, inclusive fornecedores, produtos editados e pedidos. As datas do histórico permanecem as do cenário salvo; a restauração explícita gera um cenário novo. A tela Pedidos contém uma ação explícita para restaurar o estado inicial. Preferência de tema é armazenada separadamente.
 

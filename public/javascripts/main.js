@@ -1,4 +1,4 @@
-// ---- DATA ----
+// Dados do catálogo e estado da interface.
 let estoque = [
   { cod: 'EL-001', nome: 'Smart TV 55"',       qty: 12,  classe: 'Eletrônicos', fornecedor: 'Samsung'   },
   { cod: 'EL-002', nome: 'Geladeira Frost Free', qty: 5,  classe: 'Eletrônicos', fornecedor: 'Electrolux' },
@@ -33,7 +33,7 @@ const statusMap = {
   cancelled: { label: 'Cancelado',  cls: 'pill-canc' },
 };
 
-// ---- RENDER TABLE ----
+// Renderização da tabela de estoque.
 function renderTable() {
   const search = document.getElementById('search').value.toLowerCase();
   const minQty = parseInt(document.getElementById('qty-filter').value);
@@ -140,7 +140,7 @@ function updateQtyLabel() {
   document.getElementById('qty-label').textContent = document.getElementById('qty-filter').value;
 }
 
-// ---- PEDIDOS ----
+// Listagem e operações de pedidos.
 function renderPedidos() {
   document.getElementById('badge-pedidos').textContent = pedidos.filter(p => p.status === 'pending').length;
   document.getElementById('pedidos-list').innerHTML = pedidos.map(p => {
@@ -159,7 +159,7 @@ function renderPedidos() {
   }).join('');
 }
 
-// ---- VENDAS ----
+// Indicadores e histórico de vendas.
 function renderVendas() {
   const meses = ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'];
   const vals  = [32, 41, 55, 38, 44, 48];
@@ -189,7 +189,7 @@ function renderVendas() {
     </div>`).join('');
 }
 
-// ---- TABS ----
+// Navegação entre abas.
 function showTab(name, el) {
   document.querySelectorAll('.tab-page').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -200,7 +200,7 @@ function showTab(name, el) {
   if (name === 'vendas')  renderVendas();
 }
 
-// ---- MODAL ----
+// Abertura e preenchimento dos formulários.
 function openModal() {
   document.getElementById('modal').classList.add('open');
 }
@@ -241,7 +241,7 @@ function editItem(idx) {
   openModal();
 }
 
-// ---- INICIAR PEDIDO ----
+// Criação de pedido a partir dos produtos selecionados.
 function iniciarPedido() {
   const falta = estoque.filter(i => i.qty < 10);
   if (falta.length === 0) {
@@ -264,7 +264,7 @@ function iniciarPedido() {
   }
 }
 
-// ---- INIT ----
+// Inicialização dos dados e controles.
 document.getElementById('modal').addEventListener('click', function (e) {
   if (e.target === this) closeModal();
 });

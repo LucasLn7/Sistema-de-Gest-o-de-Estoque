@@ -1,6 +1,6 @@
 # StockOS — Front-end v2
 
-Interface original do StockOS restaurada: tema escuro, destaques verde-lima e roxo, menu lateral, tabela com barras de quantidade e filtros à direita. A tela inicial volta a ser Estoque; as funções novas continuam no menu Inteligência. Mantém HTML, CSS e JavaScript sem framework ou dependências de execução externas. As fontes web são opcionais: há fallback para fontes do sistema.
+Front-end de apresentação do StockOS com tema escuro, destaques verde-lima e roxo, menu lateral, tabela com barras de quantidade e filtros à direita. A tela inicial é Estoque; análises e previsões ficam no menu Inteligência. Utiliza HTML, CSS e JavaScript sem framework ou dependências de execução externas. As fontes web são opcionais, com alternativas do sistema.
 
 ## Abrir a aplicação
 
@@ -27,11 +27,11 @@ Abra http://localhost:3000. Não é necessário executar npm install. Para desen
 
 ## Limites desta entrega
 
-A interface inicia em modo de demonstração claramente identificado. Catálogo e saldo inicial vêm do SQL enviado; histórico e projeções são sintéticos. O modelo Python não foi executado e a página não apresenta métricas fictícias de precisão.
+A interface inicia em modo de demonstração claramente identificado. Catálogo e saldo inicial vêm da base de referência; histórico e projeções são sintéticos. O modelo Python não foi executado e a página não apresenta métricas fictícias de precisão.
 
 Alterações da prévia ficam neste navegador até a restauração explícita da demonstração ou limpeza do armazenamento. Em Pedidos, Restaurar demonstração limpa os pedidos e restaura o catálogo inicial. Não existe gravação em MySQL, envio a fornecedores ou execução PHP neste servidor.
 
-A leitura de uma API futura está preparada e documentada em INTEGRACAO.md. O modo API é somente consulta nesta etapa. O ZIP original foi preservado fora desta entrega; arquivos legados dentro do projeto continuam disponíveis, mas a nova página carrega apenas os módulos novos.
+A leitura de uma API futura está preparada e documentada em INTEGRACAO.md. O modo API é somente consulta nesta etapa. Arquivos legados permanecem no projeto; a página principal carrega os módulos de interface em `public/javascripts/app.mjs`.
 
 ## Verificação
 
@@ -39,4 +39,4 @@ A leitura de uma API futura está preparada e documentada em INTEGRACAO.md. O mo
 npm test
 ```
 
-Dez testes verificam ABC, planejamento, entradas pendentes, ausência de previsões, validação de dados e integridade da demonstração, migração e validação de fornecedores. O fluxo de pedidos e a edição com filtro foram verificados na interface do navegador.
+Onze testes verificam ABC, planejamento, entradas pendentes, ausência de previsões, validação de dados e integridade da demonstração, migração e validação de fornecedores. O fluxo de pedidos e a edição com filtro foram verificados na interface do navegador.

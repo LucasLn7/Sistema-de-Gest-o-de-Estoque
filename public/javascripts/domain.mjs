@@ -19,7 +19,7 @@ export function planProduct(p, history, predictions, orders, leadTime = 5, horiz
   const daily = mean(future.map(h => h.quantity));
   const demand = sum(future, h => h.quantity);
   const incoming = sum(orders.filter(o => o.status === 'pending').flatMap(o => o.items), i => i.productId === p.id ? i.quantity : 0);
-  // Incoming orders have no confirmed delivery date: show them, but never assume arrival before a rupture.
+  // Pedidos sem data de entrega entram no total pendente, mas não aumentam a cobertura do estoque.
   const coverage = daily > 0 ? p.stock / daily : null;
   const target = Math.max(p.minimum, Math.ceil(daily * (leadTime + horizon + safetyDays)));
   const suggested = future.length ? Math.max(0, target - p.stock - incoming) : 0;
