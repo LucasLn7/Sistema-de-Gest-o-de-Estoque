@@ -1,3 +1,4 @@
+/* Interface legada com catálogo de exemplo próprio. O index atual usa app.mjs; não misturar este estado antigo com os dados da aplicação atual. */
 // Dados do catálogo e estado da interface.
 let estoque = [
   { cod: 'EL-001', nome: 'Smart TV 55"',       qty: 12,  classe: 'Eletrônicos', fornecedor: 'Samsung'   },
@@ -84,6 +85,7 @@ function renderTable() {
   updateFilters();
 }
 
+/** Recalcula os indicadores da interface legada a partir do catálogo de exemplo. */
 function updateStats() {
   document.getElementById('total-itens').textContent        = estoque.length;
   document.getElementById('total-em-estoque').textContent   = estoque.filter(i => i.qty >= 10).length;
@@ -91,6 +93,7 @@ function updateStats() {
   document.getElementById('total-zerado').textContent       = estoque.filter(i => i.qty === 0).length;
 }
 
+/** Atualiza as opções de filtro da interface legada conforme os dados disponíveis. */
 function updateFilters() {
   // Fornecedores
   const fornecedores = [...new Set(estoque.map(i => i.fornecedor))];
@@ -107,6 +110,7 @@ function updateFilters() {
   ).join('');
 }
 
+/** Desenha a distribuição de produtos no gráfico compacto da interface legada. */
 function renderMiniChart() {
   const classes  = [...new Set(estoque.map(i => i.classe))];
   const maxCount = Math.max(...classes.map(c => estoque.filter(i => i.classe === c).length), 1);
@@ -121,21 +125,25 @@ function renderMiniChart() {
   }).join('');
 }
 
+/** Alterna o filtro escolhido e atualiza a tabela da interface legada. */
 function toggleFilter(type, val) {
   activeFilters[type] = activeFilters[type] === val ? null : val;
   renderTable();
 }
 
+/** Aplica a classe selecionada como filtro do catálogo de exemplo. */
 function filterClasse(classe) {
   activeFilters.classe = classe;
   renderTable();
 }
 
+/** Inverte a ordenação da tabela e refaz a exibição dos resultados. */
 function toggleSort() {
   sortAsc = !sortAsc;
   renderTable();
 }
 
+/** Sincroniza o texto da quantidade mínima com o controle de filtro. */
 function updateQtyLabel() {
   document.getElementById('qty-label').textContent = document.getElementById('qty-filter').value;
 }
@@ -204,12 +212,14 @@ function showTab(name, el) {
 function openModal() {
   document.getElementById('modal').classList.add('open');
 }
+/** Fecha a janela de edição da interface legada. */
 function closeModal() {
   document.getElementById('modal').classList.remove('open');
   ['m-cod', 'm-nome', 'm-qty', 'm-fornecedor'].forEach(id => {
     document.getElementById(id).value = '';
   });
 }
+/** Inclui um item no catálogo de exemplo da interface legada e atualiza sua exibição. */
 function addItem() {
   const cod        = document.getElementById('m-cod').value.trim();
   const nome       = document.getElementById('m-nome').value.trim();
@@ -225,12 +235,14 @@ function addItem() {
   renderTable();
   closeModal();
 }
+/** Remove o item selecionado do catálogo de exemplo da interface legada. */
 function removeItem(idx) {
   if (confirm('Remover este item?')) {
     estoque.splice(idx, 1);
     renderTable();
   }
 }
+/** Abre a edição do item selecionado na interface legada. */
 function editItem(idx) {
   const item = estoque[idx];
   document.getElementById('m-cod').value        = item.cod;

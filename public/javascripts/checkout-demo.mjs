@@ -1,3 +1,4 @@
+/* Registra vendas apenas na demonstração. Valida a lista inteira, calcula descontos em centavos e só troca o estado depois que o armazenamento local confirma a gravação. */
 import {itemPricing,purchasePricing} from './checkout-pricing.mjs';
 /** Valida e salva a compra completa antes de substituir o estado da demonstração. */
 export function registerDemoPurchase(data,payload,key,save){

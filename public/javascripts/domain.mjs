@@ -1,5 +1,7 @@
+/* Reúne classificação ABC, planejamento de reposição e validação dos dados. Os cálculos não dependem do DOM, permitindo testar as regras separadamente das telas. */
 export const sum = (rows, fn = x => x) => rows.reduce((total, row) => total + fn(row), 0);
 export const mean = rows => rows.length ? sum(rows) / rows.length : 0;
+/** Classifica por faturamento histórico acumulado: A até 80%, B até 95% e C restante; sem receita fica sem classe. */
 export function abcProducts(products, history) {
   const totals = new Map();
   for (const h of history) totals.set(h.productId, (totals.get(h.productId) || 0) + h.quantity * h.price);
@@ -12,6 +14,7 @@ export function abcProducts(products, history) {
     return {...p, abc, share, cumulative, rank:index+1};
   });
 }
+/** Calcula cobertura e reposição sem presumir entrega de pedidos antes de uma ruptura. Não modifica o produto. */
 export function planProduct(p, history, predictions, orders, leadTime = 5, horizon = 7, safetyDays = 2) {
   const series = history.filter(h => h.productId === p.id).sort((a,b) => a.date.localeCompare(b.date));
   const past = series.slice(-28).map(h => h.quantity);
@@ -26,6 +29,7 @@ export function planProduct(p, history, predictions, orders, leadTime = 5, horiz
   const status = p.stock <= 0 ? 'Ruptura' : coverage !== null && coverage < leadTime ? 'Crítico' : p.stock < p.minimum ? 'Abaixo do mínimo' : coverage !== null && coverage < horizon ? 'Atenção' : 'Regular';
   return {...p, past, future, daily, demand, incoming, coverage, suggested, status, hasForecast:future.length > 0};
 }
+/** Valida estrutura, referências e valores do snapshot. Lança Error antes de renderizar dados inconsistentes. */
 export function validateSnapshot(data) {
   if (!data || !['products','history','predictions','orders'].every(k => Array.isArray(data[k]))) throw new Error('Resposta incompleta: produtos, histórico, previsões e pedidos são obrigatórios.');
   const finiteNonnegative = x => typeof x === 'number' && Number.isFinite(x) && x >= 0;

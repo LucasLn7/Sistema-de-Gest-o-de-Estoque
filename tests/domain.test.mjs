@@ -1,3 +1,4 @@
+/* Testes de regressão deste módulo. Os cenários descrevem os contratos esperados; mudanças de regra precisam atualizar também os resultados verificados. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { abcProducts, planProduct, validateSnapshot } from '../public/javascripts/domain.mjs';

@@ -1,3 +1,4 @@
+/* Testes de regressão deste módulo. Os cenários descrevem os contratos esperados; mudanças de regra precisam atualizar também os resultados verificados. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createDemo} from '../public/javascripts/demo-data.mjs';

@@ -1,3 +1,4 @@
+/* Concentra datas de validade, classificação dos lotes e saldo liberado para venda. Produtos sem controle de validade seguem uma regra distinta dos produtos com lotes. */
 /** Retorna a data civil de São Paulo sem depender do fuso configurado no computador. */
 export function localDay(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-US',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);

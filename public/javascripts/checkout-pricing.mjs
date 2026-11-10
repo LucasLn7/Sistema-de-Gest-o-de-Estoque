@@ -1,3 +1,4 @@
+/* Centraliza os cálculos monetários do carrinho. Trabalha em centavos para que descontos, soma dos itens e total da compra tenham o mesmo arredondamento. */
 /** Calcula desconto sobre o valor total do item (quantidade × preço), arredondado em centavos. */
 export function itemPricing(item){
   const gross=Math.round(item.price*100)*item.quantity,type=item.discountType||'amount',value=Number(item.discountValue??0);

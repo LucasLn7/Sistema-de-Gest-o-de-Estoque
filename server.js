@@ -1,3 +1,4 @@
+/* Servidor de arquivos estáticos para apresentação local; a persistência da demonstração pertence ao navegador. */
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');

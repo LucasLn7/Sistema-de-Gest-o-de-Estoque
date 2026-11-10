@@ -1,3 +1,4 @@
+/* Estilos da interface: cores, disposição e estados visuais. Regras de impressão são isoladas em media print; preservar os seletores usados pelo JavaScript. */
 .vendas-layout {
   flex: 1;
   padding: 24px 32px;

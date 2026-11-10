@@ -1,3 +1,4 @@
+/* Gera o catálogo e as séries sintéticas usados na apresentação. Estes dados servem para demonstração e não comprovam a precisão do modelo em vendas reais. */
 import { abcProducts } from './domain.mjs';
 const seed = [
   {
@@ -551,6 +552,7 @@ const seed = [
     "stock": 48
   }
 ];
+/** Cria uma cópia independente dos dados sintéticos para não modificar a base de demonstração. */
 export function createDemo() {
  const referenceDate = new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  const today = new Date(referenceDate+'T12:00:00Z');

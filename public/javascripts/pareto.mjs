@@ -1,7 +1,9 @@
+/* Desenha a participação dos produtos e a curva acumulada da classificação ABC. Recebe os resultados calculados pelo domínio, sem gravar dados. */
 const escape = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = (value,digits=0) => new Intl.NumberFormat('pt-BR',{maximumFractionDigits:digits}).format(value);
 const currency = value => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(value);
 
+/** Gera o Pareto com barras de faturamento e linha acumulada; trata ausência de receita. */
 export function paretoChart(products) {
   const sorted=products.filter(p=>p.revenue>0).slice().sort((a,b)=>b.revenue-a.revenue||a.id-b.id);
   const total=sorted.reduce((n,p)=>n+p.revenue,0);

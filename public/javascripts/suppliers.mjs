@@ -1,6 +1,8 @@
+/* Normaliza fornecedores e valida cadastros e vínculos com produtos. No modo demonstrativo, as alterações são feitas sobre o estado local. */
 export const CATEGORIES = ['Publicações','Alimentos e bebidas','Tabacaria','Papelaria e variedades','Brinquedos'];
 export const cleanName = value => String(value||'').trim().replace(/\s+/g,' ');
 const nameKey = value => cleanName(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR');
+/** Migra a demonstração antiga e normaliza vínculos e e-mails; modifica o snapshot recebido. */
 export function normalizeSuppliers(data) {
   if(!Array.isArray(data.suppliers)) data.suppliers=[];
   if(!data.supplierSchemaVersion){
@@ -19,6 +21,7 @@ export function normalizeSuppliers(data) {
   for(const supplier of data.suppliers)if(supplier.email===undefined||supplier.email===null)supplier.email='';
   return data;
 }
+/** Retorna a primeira mensagem de validação de fornecedor ou string vazia quando válido. */
 export function supplierError(values,suppliers,id=0){
   if(!cleanName(values.name)||!cleanName(values.segment))return 'Informe nome e segmento do fornecedor.';
   const digits=String(values.phone||'').replace(/\D/g,'');
@@ -28,6 +31,7 @@ export function supplierError(values,suppliers,id=0){
   if(suppliers.some(s=>s.id!==id&&nameKey(s.name)===nameKey(values.name)))return 'Já existe um fornecedor com este nome.';
   return '';
 }
+/** Valida e altera fornecedor na demonstração, sincronizando os nomes dos produtos vinculados. */
 export function upsertSupplier(data,values,id=0){
   const error=supplierError(values,data.suppliers,id);if(error)throw new Error(error);
   const record={id:id||Math.max(0,...data.suppliers.map(s=>s.id))+1,name:cleanName(values.name),phone:String(values.phone).trim(),email:String(values.email||'').trim(),segment:cleanName(values.segment)};
