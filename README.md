@@ -23,6 +23,10 @@ Abra http://localhost:3000. Não é necessário executar npm install. Para desen
 - Reposição com simulação de prazo e reserva, seleção de produtos e custo estimado.
 - Pedidos com rascunho, confirmação, cancelamento e recebimento integral na demonstração.
 - Vendas com faturamento e volume dos últimos 30 dias disponíveis.
+- Saída rápida com busca por nome ou ID, lista do cliente, quantidades, descontos em reais ou porcentagem por item e na compra, pagamento e parcelas no crédito.
+- Compras completas no histórico e comprovante não fiscal para bobinas de 58 ou 80 mm, com impressão pelo navegador.
+
+Na apresentação, finalizar uma venda atualiza apenas o estoque e o histórico desta demonstração, salvos neste navegador. Não exige PHP ou MySQL e não envia vendas ao projeto completo. Restaurar a demonstração também remove as compras de teste.
 - Exportação CSV nas telas de dados; tema claro/escuro, menu móvel e navegação por teclado.
 
 ## Limites desta entrega

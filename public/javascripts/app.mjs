@@ -1,3 +1,4 @@
+import { checkoutPage, mountCheckout } from './checkout.mjs?v=20261110-demo-checkout-1';
 import { CATEGORIES, supplierError, upsertSupplier } from './suppliers.mjs';
 import { paretoChart } from './pareto.mjs';
 import { loadData, saveData, resetDemo, isDemo } from './data-service.mjs';
@@ -25,7 +26,7 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;'
 const num = (v, decimals = 0) => new Intl.NumberFormat('pt-BR',{maximumFractionDigits:decimals,minimumFractionDigits:decimals}).format(v);
 const money = v => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(v);
 const shortDate = value => new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date(value.length === 10 ? value+'T12:00:00Z' : value));
-const labels = {overview:'Visão geral', inventory:'Estoque',orders:'Pedidos',sales:'Vendas',forecast:'Previsão de demanda',abc:'Curva ABC',replenishment:'Reposição',suppliers:'Fornecedores'};
+const labels = {checkout:'Saída rápida',overview:'Visão geral', inventory:'Estoque',orders:'Pedidos',sales:'Vendas',forecast:'Previsão de demanda',abc:'Curva ABC',replenishment:'Reposição',suppliers:'Fornecedores'};
 const state = {page:'inventory',search:'',category:'',abc:'',status:'',supplier:'',minStock:0,sort:'priority',productId:0,leadTime:5,safetyDays:2,selected:new Set()};
 let data, rows = [], toastTimer, productDraft = null;
 const root = document.querySelector('#content');
@@ -175,7 +176,8 @@ function render() {
   document.querySelectorAll('[data-page]').forEach(a=>{const active=a.dataset.page===state.page;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   document.querySelector('#order-count').textContent=data.orders.filter(o=>['draft','pending'].includes(o.status)).length;
   document.querySelector('#source-label').innerHTML=`<span></span>${isDemo?'Demonstração':'Dados da API'}`;
-  root.innerHTML=({overview,inventory,orders,sales,forecast,abc:abcPage,replenishment,suppliers:suppliersPage})[state.page]();
+  root.innerHTML=({checkout:()=>checkoutPage(data,isDemo),overview,inventory,orders,sales,forecast,abc:abcPage,replenishment,suppliers:suppliersPage})[state.page]();
+  if(state.page==='checkout')mountCheckout(root,data,{reload:async()=>{data=await loadData();render();},isDemo});
   renderTable();renderSuppliers();fillIcons();
 }
 function openDialog(title,body,actions='') {
