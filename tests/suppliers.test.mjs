@@ -17,7 +17,7 @@ test('atualiza nome por ID sem perder vínculos nem sobrescrever contatos',()=>{
   const data=normalizeSuppliers(createDemo()),p=data.products[0],id=p.supplierId;
   upsertSupplier(data,{name:'Fornecedor Teste',phone:'(11) 99999-0000',segment:'Publicações'},id);
   assert.equal(p.supplier,'Fornecedor Teste');assert.equal(p.supplierId,id);
-  normalizeSuppliers(data);assert.equal(data.suppliers.find(s=>s.id===id).phone,'(11) 99999-0000');
+  normalizeSuppliers(data);assert.equal(data.suppliers.find(s=>s.id===id).phone,'(11)99999-0000');
   validateSnapshot(data);
 });
 test('bloqueia telefone inválido e nomes duplicados sem diferenciar acentos',()=>{
@@ -43,3 +43,5 @@ test('e-mail opcional é migrado sem apagar contatos e validado quando informado
   assert.ok(supplierError({name:'Outro',phone:'11999990000',segment:'Brinquedos',email:'email-invalido'},data.suppliers));
   assert.equal(supplierError({name:'Outro',phone:'11999990000',segment:'Brinquedos',email:''},data.suppliers),'');
 });
+
+test('telefone recebe máscara e respeita limite de onze dígitos',async()=>{const {formatPhone}=await import('../public/javascripts/suppliers.mjs');assert.equal(formatPhone('11958971010'),'(11)95897-1010');assert.equal(formatPhone('11958971010999'),'(11)95897-1010');assert.equal(formatPhone('1133331010'),'(11)3333-1010');assert.equal(formatPhone('abc'),'');});

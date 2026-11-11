@@ -25,7 +25,7 @@ export function normalizeSuppliers(data) {
 export function supplierError(values,suppliers,id=0){
   if(!cleanName(values.name)||!cleanName(values.segment))return 'Informe nome e segmento do fornecedor.';
   const digits=String(values.phone||'').replace(/\D/g,'');
-  if(!/^[+\d\s().-]+$/.test(values.phone)||digits.length<10||digits.length>15)return 'Informe um telefone válido com DDD (10 a 15 dígitos, incluindo o código do país quando houver).';
+  if(!/^[+\d\s().-]+$/.test(values.phone)||digits.length<10||digits.length>11)return 'Informe um telefone válido com DDD (10 ou 11 dígitos).';
   const email=String(values.email||'').trim();
   if(email&&(email.length>254||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))return 'Informe um e-mail válido, como contato@empresa.com.br.';
   if(suppliers.some(s=>s.id!==id&&nameKey(s.name)===nameKey(values.name)))return 'Já existe um fornecedor com este nome.';
@@ -34,9 +34,18 @@ export function supplierError(values,suppliers,id=0){
 /** Valida e altera fornecedor na demonstração, sincronizando os nomes dos produtos vinculados. */
 export function upsertSupplier(data,values,id=0){
   const error=supplierError(values,data.suppliers,id);if(error)throw new Error(error);
-  const record={id:id||Math.max(0,...data.suppliers.map(s=>s.id))+1,name:cleanName(values.name),phone:String(values.phone).trim(),email:String(values.email||'').trim(),segment:cleanName(values.segment)};
+  const record={id:id||Math.max(0,...data.suppliers.map(s=>s.id))+1,name:cleanName(values.name),phone:formatPhone(values.phone),email:String(values.email||'').trim(),segment:cleanName(values.segment)};
   if(id){const index=data.suppliers.findIndex(s=>s.id===id);if(index<0)throw new Error('Fornecedor não encontrado.');data.suppliers[index]=record;}
   else data.suppliers.push(record);
   for(const p of data.products)if(p.supplierId===record.id)p.supplier=record.name;
   return record;
+}
+
+/** Formata DDD e telefone brasileiro, com no máximo onze dígitos. */
+export function formatPhone(value){
+  const digits=String(value??'').replace(/\D/g,'').slice(0,11);
+  if(!digits)return '';
+  if(digits.length<=2)return '('+digits;
+  const local=digits.slice(2),split=local.length>8?5:4;
+  return '('+digits.slice(0,2)+')'+local.slice(0,split)+(local.length>split?'-'+local.slice(split):'');
 }
