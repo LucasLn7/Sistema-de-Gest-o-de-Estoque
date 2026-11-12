@@ -42,3 +42,19 @@ body.light{color-scheme:light;--bg:#f5f5f8;--surface:#fff;--surface2:#eeeeF5;--l
 /* Seleção múltipla de categorias do estoque. */
 /* Categorias selecionáveis por nome, com quebra de linha e sem rolagem lateral. */
 .category-name-group{min-width:0;max-width:100%}.category-name-title{display:block;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}.category-name-list{display:flex;flex-direction:column;align-items:stretch;gap:5px;min-width:0;width:100%;max-width:100%}.category-name{display:block;box-sizing:border-box;max-width:100%;min-width:0;width:100%;border:0;border-left:3px solid transparent;border-radius:0;background:transparent;color:var(--muted);text-align:left;font:inherit;font-size:12px;line-height:1.5;padding:7px 8px;white-space:normal;overflow-wrap:anywhere;cursor:pointer}.category-name:hover{color:var(--text);background:var(--surface2)}.category-name.is-active{color:var(--accent);font-weight:700;border-left-color:var(--accent);background:var(--accent-soft)}.filter-sidebar{min-width:0;overflow-x:hidden}.category-name:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* Indicadores de estoque; usa a paleta original da apresentação, sem alterar o tema. */
+body[data-page=inventory] .inventory-stat{--stock-card-color:var(--accent);--stock-card-soft:var(--accent-soft);position:relative;overflow:hidden;border-radius:10px;padding:17px 18px}
+body[data-page=inventory] .inventory-stat[data-stock-group=available]{--stock-card-color:var(--green);--stock-card-soft:var(--green-soft)}
+body[data-page=inventory] .inventory-stat[data-stock-group=low]{--stock-card-color:var(--amber);--stock-card-soft:var(--amber-soft)}
+body[data-page=inventory] .inventory-stat[data-stock-group=empty]{--stock-card-color:var(--red);--stock-card-soft:var(--red-soft)}
+body[data-page=inventory] .inventory-stat::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--stock-card-color)}
+body[data-page=inventory] .inventory-stat .stat-top{display:flex;align-items:center;justify-content:space-between;gap:10px;letter-spacing:0;text-transform:none;font-size:12px}
+body[data-page=inventory] .inventory-stat .stat-icon{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:7px;border-radius:8px;color:var(--stock-card-color);background:var(--stock-card-soft);flex-shrink:0}
+body[data-page=inventory] .inventory-stat .stat-value{color:var(--stock-card-color);font:700 28px/1.3 'DM Sans',Arial,sans-serif;letter-spacing:-1px;font-variant-numeric:tabular-nums;margin:7px 0 4px}
+body[data-page=inventory] .stock-quantity[data-stock-level=regular]{--quantity-color:var(--green)}
+body[data-page=inventory] .stock-quantity[data-stock-level=low]{--quantity-color:var(--amber)}
+body[data-page=inventory] .stock-quantity[data-stock-level=empty]{--quantity-color:var(--red)}
+body[data-page=inventory] .stock-quantity[data-stock-level]>.mono{color:var(--quantity-color);font-weight:700}
+body[data-page=inventory] .stock-quantity[data-stock-level] .quantity-track span{background:var(--quantity-color)}
+@media(max-width:650px){body[data-page=inventory] .inventory-stat{padding:14px 12px}body[data-page=inventory] .inventory-stat .stat-top{font-size:11px}}
